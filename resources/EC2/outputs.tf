@@ -1,27 +1,21 @@
-output "arn" {
-  value = aws_instance.web_server.arn
+output "web_server" {
+  value = {
+    for ec2 in aws_instance.web_server : "config" => {
+      arn = ec2["arn"]
+      public_ip = ec2["public_ip"]
+      private_ip = ec2["private_ip"] 
+      instance_state = ec2["instance_state"]
+      tags = ec2["tags"]
+      key_name = ec2["key_name"]
+    }
+  }
 }
 
-output "public_ip" {
-  value = aws_instance.web_server.public_ip
-}
-
-output "private_ip" {
-  value = aws_instance.web_server.private_ip
-}
-
-output "instance_state" {
-  value = aws_instance.web_server.instance_state
-}
-
-output "tags" {
-  value = aws_instance.web_server.tags
-}
-
-output "elastic_ip" {
-  value = aws_eip.web_server_eip.public_ip
-}
-
-output "key_name" {
-  value = aws_instance.web_server.key_name
+output "elastic_ips" {
+  value = {
+    for eip in aws_eip.web_server_eip : "config" => {
+      public_ip = eip["public_ip"]
+      instance = eip["instance"]
+    }
+  }
 }

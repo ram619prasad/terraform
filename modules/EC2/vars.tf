@@ -5,22 +5,22 @@ variable "region" {
 
 variable "AWS_ACCESS_KEY" {
   type    = "string"
-  default = "your access key pls"
+  default = "access key"
 }
 
 variable "AWS_SECRET_KEY" {
   type    = "string"
-  default = "your secret key pls"
+  default = "secret key"
 }
 
-variable "ec2_ami" {
-  default = "ami-00dc79254d0461090"
-}
-
-variable "ec2_instance_type" {
-  default = "t2.micro"
-}
-
-variable "ec2_instance_name" {
-  default = "terraform_web_server"
+variable "ec2_config" {
+  default = [
+    {
+      ec2_ami = "ami-00dc79254d0461090"
+      ec2_instance_type = "t2.micro"
+      ec2_instance_name = "terraform_web_server"
+      subnet_id = "subnet-5abec264"
+      ssh_key_name = null
+    }
+  ]
 }

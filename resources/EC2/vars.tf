@@ -1,16 +1,13 @@
-variable "ec2_ami" {
-  type = "string"
-}
-
-variable "ec2_instance_type" {
-  type = "string"
-}
-
-variable "ec2_instance_name" {
-  type = "string"
-}
-
-variable "ssh_key_name" {
-  type = "string"
-  default = null
+variable "ec2_config" {
+  type = list(
+    object(
+      {
+        ec2_ami = string
+        ec2_instance_type = string
+        ec2_instance_name = string
+        subnet_id = string
+        ssh_key_name = string
+      }
+    )
+  )
 }
