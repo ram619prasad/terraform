@@ -3,6 +3,8 @@
 //  2. Create public_subnets as specified in the module inputs(for now 1)
 //  3. Create private_subnets as specified in the module inputs(for now 1)
 //  4. Attach an internet gateway to the VPC
+//  5. Launch an ec2 instance in public and private subnets.
+//        - Add Security groups for SSH and public access to instance in public subnet
 
 resource "aws_vpc" "terraform_vpc" {
   cidr_block = var.vpc_cidr_block

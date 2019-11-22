@@ -40,3 +40,27 @@ variable "private_subnets" {
     }
   ]
 }
+
+variable "public_ec2_ami" {
+  default = "ami-00dc79254d0461090"
+}
+
+variable "public_ec2_instance_type" {
+  default = "t2.micro"
+}
+
+variable "public_ec2_instance_name" {
+  default = "terraform_web_server"
+}
+
+variable "private_ec2_ami" {
+  default = "ami-00dc79254d0461090"
+}
+
+variable "private_ec2_instance_type" {
+  default = "t2.micro"
+}
+
+variable "private_ec2_instance_name" {
+  default = "terraform_web_server"
+}

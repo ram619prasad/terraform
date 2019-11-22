@@ -25,3 +25,11 @@ output "gateway_id" {
 output "gateway_tags" {
   value = module.vpc.gateway_tags
 }
+
+output "public_instances" {
+  value = module.public_instances
+}
+
+output "private_instances" {
+  value = module.private_instances
+}
