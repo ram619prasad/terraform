@@ -6,22 +6,23 @@
 
 
 locals {
-  ssh_key_name = "temp_key"
-  has_vpc = false
+  ssh_key_name = "ramp_key"
 }
 
-resource "aws_key_pair" "ramp_us_east_1" {
-  key_name   = local.ssh_key_name
-  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDLEW8n5wDF3h2fQvrKY7Q+5CpgVz8/QMlyuS4WzFIGGpTaDKwyuGKH0Ph2mCwXmkkEVQGLBLixDlDmSTIfqGsEgq2JDbR7BmM8Luz5ANFGARafmLHnlKYGJ5IoSAjtSGhuJ21A6noLBzzPh7xLidXIp6T17thSq9IaojhIVxWHRuXB8/oAB1hjAUHyAK/x+9Xcixs8xG3DwVz5JHwhPIHMDlEZwm32QIrgTdTjLYIbn0QI7b1htqYheqVt0DtvAoYn57F0jEN3mG2UINCmFC1Wy+o4JbKdLIzeQPZlj3IfOGKce7lw2qTGQoPJEbSczMs46D+U4mI0F8FlIa9JJQZp rpr_maddi@rampraseddysmbp"
-}
+// resource "aws_key_pair" "ramp_us_east_1" {
+//   key_name   = local.ssh_key_name
+//   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDLEW8n5wDF3h2fQvrKY7Q+5CpgVz8/QMlyuS4WzFIGGpTaDKwyuGKH0Ph2mCwXmkkEVQGLBLixDlDmSTIfqGsEgq2JDbR7BmM8Luz5ANFGARafmLHnlKYGJ5IoSAjtSGhuJ21A6noLBzzPh7xLidXIp6T17thSq9IaojhIVxWHRuXB8/oAB1hjAUHyAK/x+9Xcixs8xG3DwVz5JHwhPIHMDlEZwm32QIrgTdTjLYIbn0QI7b1htqYheqVt0DtvAoYn57F0jEN3mG2UINCmFC1Wy+o4JbKdLIzeQPZlj3IfOGKce7lw2qTGQoPJEbSczMs46D+U4mI0F8FlIa9JJQZp rpr_maddi@rampraseddysmbp"
+// }
 
 resource "aws_instance" "web_server" {
-  count = length(var.ec2_config)
+  count                   = length(var.ec2_config)
 
-  ami           = var.ec2_config[count.index]["ec2_ami"]
-  instance_type = var.ec2_config[count.index]["ec2_instance_type"]
-  key_name      = coalesce(var.ec2_config[count.index]["ssh_key_name"], aws_key_pair.ramp_us_east_1.key_name)
-  subnet_id     = var.ec2_config[count.index]["subnet_id"]
+  ami                     = var.ec2_config[count.index]["ec2_ami"]
+  instance_type           = var.ec2_config[count.index]["ec2_instance_type"]
+  // key_name      = coalesce(var.ec2_config[count.index]["ssh_key_name"], aws_key_pair.ramp_us_east_1.key_name)
+  key_name                = local.ssh_key_name
+  subnet_id               = var.ec2_config[count.index]["subnet_id"]
+  vpc_security_group_ids  = coalesce(var.ec2_config[count.index]["security_groups"], [])
 
   tags = {
     Name        = "${var.ec2_config[count.index]["ec2_instance_name"]} - ${count.index}"

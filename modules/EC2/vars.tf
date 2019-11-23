@@ -5,12 +5,12 @@ variable "region" {
 
 variable "AWS_ACCESS_KEY" {
   type    = "string"
-  default = "access key"
+  default = "AKIAW3TRK4QEZ7AAWT5N"
 }
 
 variable "AWS_SECRET_KEY" {
   type    = "string"
-  default = "secret key"
+  default = "IGW6sg86wSguXAcIO/bPRXGdCbWYhsHsfLGIR99L"
 }
 
 variable "ec2_config" {
@@ -21,6 +21,7 @@ variable "ec2_config" {
       ec2_instance_name = "terraform_web_server"
       subnet_id = "subnet-5abec264"
       ssh_key_name = null
+      security_groups = []
     }
   ]
 }

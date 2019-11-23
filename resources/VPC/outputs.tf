@@ -25,3 +25,11 @@ output "gateway_id" {
 output "gateway_tags" {
   value = aws_internet_gateway.terraform_gateway.tags
 }
+
+output "public_security_groups" {
+  value = aws_security_group.web_dmz
+}
+
+output "private_security_groups" {
+  value = aws_security_group.private_sg
+}

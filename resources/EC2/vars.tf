@@ -7,6 +7,7 @@ variable "ec2_config" {
         ec2_instance_name = string
         subnet_id = string
         ssh_key_name = string
+        security_groups = list(string)
       }
     )
   )

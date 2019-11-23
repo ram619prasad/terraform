@@ -33,3 +33,11 @@ output "public_instances" {
 output "private_instances" {
   value = module.private_instances
 }
+
+output "public_security_groups" {
+  value = module.vpc.public_security_groups
+}
+
+output "private_security_groups" {
+  value = module.vpc.private_security_groups
+}

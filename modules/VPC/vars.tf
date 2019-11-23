@@ -27,6 +27,7 @@ variable "public_subnets" {
       az = "us-east-1a"
       cidr_block = "10.0.1.0/24"
       subnet_type = "public"
+      map_public_ip_on_launch = true
     }
   ]
 }
@@ -37,6 +38,7 @@ variable "private_subnets" {
       az = "us-east-1b"
       cidr_block = "10.0.2.0/24"
       subnet_type = "private"
+      map_public_ip_on_launch = false
     }
   ]
 }
@@ -63,4 +65,31 @@ variable "private_ec2_instance_type" {
 
 variable "private_ec2_instance_name" {
   default = "terraform_web_server"
+}
+
+variable "public_sg_name" {
+  default = "web_dmz"
+}
+
+variable "sg_ingress_rules" {
+  default = [
+    {
+      cidr_blocks = ["0.0.0.0/0"]
+      from_port   = 22
+      to_port     = 22
+      protocol    = "tcp"
+    },
+    {
+      cidr_blocks = ["0.0.0.0/0"]
+      from_port   = 80
+      to_port     = 80
+      protocol    = "tcp"
+    },
+    {
+      cidr_blocks = ["0.0.0.0/0"]
+      from_port   = 443
+      to_port     = 443
+      protocol    = "tcp"
+    }
+  ]
 }
