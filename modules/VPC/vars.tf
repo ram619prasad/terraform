@@ -5,12 +5,12 @@ variable "region" {
 
 variable "AWS_ACCESS_KEY" {
   type    = "string"
-  default = "AKIAW3TRK4QEZ7AAWT5N"
+  default = "access key"
 }
 
 variable "AWS_SECRET_KEY" {
   type    = "string"
-  default = "IGW6sg86wSguXAcIO/bPRXGdCbWYhsHsfLGIR99L"
+  default = "secret key"
 }
 
 variable "vpc_cidr_block" {
