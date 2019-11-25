@@ -8,6 +8,7 @@
 //        - Add Security group to private subnet to allow traffic only from public subnet instances
 //  6. Create a secondary route table for the VPC to allow the internet traffic
 //  7. Change the public subnet to use the secondary route table
+//  8. Create NAT Gateways in each of public instances for internet access to private instances for any os updates.
 
 resource "aws_vpc" "terraform_vpc" {
   cidr_block = var.vpc_cidr_block
@@ -120,4 +121,20 @@ resource "aws_route_table_association" "public_subnet_routes" {
 
   subnet_id      = local.public_sg_ids[count.index]
   route_table_id = aws_route_table.secondary_route_table.id
-} 
+}
+
+resource "aws_eip" "gateway_eip" {
+  count  = length(local.public_sg_ids)
+}
+
+locals {
+  gateway_eips_ids = flatten([for eip in aws_eip.gateway_eip : eip["id"]])
+}
+
+resource "aws_nat_gateway" "nat_gateways" {
+  depends_on    = [aws_internet_gateway.terraform_gateway, aws_eip.gateway_eip]
+  count         = length(local.gateway_eips_ids)
+
+  allocation_id = local.gateway_eips_ids[count.index]
+  subnet_id     = local.public_sg_ids[count.index]
+}

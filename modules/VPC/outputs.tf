@@ -41,3 +41,11 @@ output "public_security_groups" {
 output "private_security_groups" {
   value = module.vpc.private_security_groups
 }
+
+output "gateway_eip_public_ips" {
+  value = module.vpc.gateway_eip_public_ips
+}
+
+output "nat_gateways" {
+  value = module.vpc.nat_gateways
+}

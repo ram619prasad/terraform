@@ -33,3 +33,11 @@ output "public_security_groups" {
 output "private_security_groups" {
   value = aws_security_group.private_sg
 }
+
+output "gateway_eip_public_ips" {
+  value = [for eip in aws_eip.gateway_eip : eip["allocation_id"]]
+}
+
+output "nat_gateways" {
+  value = "aws_nat_gateway.nat_gateways"
+}
